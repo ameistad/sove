@@ -1,0 +1,38 @@
+/* Tables
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 5px 5px;
+  text-align: left;
+  border-bottom: 1px solid $light-grey;
+}
+
+th:first-child,
+td:first-child {
+  padding-left: 0;
+}
+
+th:last-child,
+td:last-child {
+  padding-right: 0;
+}
+
+th {
+  font-weight: 900;
+  font-size: 1rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.hover {
+    tbody {
+    tr:hover > td,
+    tr:hover > th {
+      background-color: $dark-white;
+    }
+  }
+}

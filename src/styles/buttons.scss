@@ -1,0 +1,110 @@
+/* Buttons
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.btn {
+  display: inline-block;
+  height: 32px;
+  padding: 0 1em;
+  color: $dark-grey;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 32px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid $medium-grey;
+  cursor: pointer;
+  box-sizing: border-box;
+  // vertical-align: middle;
+}
+
+.btn-no-inline {
+  display: block;
+}
+
+.btn:hover,
+.btn:focus {
+  color: $dark-grey;
+  border-color: $dark-grey;
+}
+
+// Color buttons
+.btn-full {
+  color: $white;
+  background-color: $light-blue;
+  border-color: $light-blue;
+}
+
+.btn-full:hover,
+.btn-full:focus {
+  color: $white;
+  background-color: $dark-blue;
+  border-color: $dark-blue;
+}
+
+// Different sizes
+.btn-small {
+  height: 20px;
+  line-height: 20px;
+  font-size: .8rem;
+}
+
+.btn-large {
+  height: 38px;
+  line-height: 38px;
+  font-size: 1.3rem;
+}
+
+.btn-xlarge {
+  height: 58px;
+  line-height: 58px;
+  font-size: 2rem;
+}
+
+// Button delete
+.btn-delete {
+  border: 1px solid $red;
+}
+
+// Button success
+.btn-success {
+  border: 1px solid $green;
+}
+
+// Button selected
+.btn-selected {
+  background-color: $white;
+  color: $dark-grey;
+  border: 1px solid $dark-grey;
+}
+
+// Tag button (not inherited)
+.btn-tag {
+    display: inline-block;
+    height: 15px;
+    line-height: 15px;
+    padding: 0 1em;
+    border-radius: 2px;
+    font-size: 1rem;
+    background-color: $dark-grey;
+    color: $white;
+}
+.btn-tag-active {
+  height: 20px;
+  line-height: 20px;
+  font-size: 1.3rem;
+}
+
+// Cancel button (not inherited)
+.btn-cancel {
+  font-size: .9em;
+  cursor: pointer;
+  padding-top: 3px;
+}
+.btn-cancel:hover {
+  text-decoration: underline;
+}

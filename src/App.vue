@@ -1,32 +1,43 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div class="container" id="app">
+    <Navbar/>
+    <transition name="fade" mode="out-in">
+      <router-view :key="$route.fullPath"/>
+    </transition>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Navbar from '@/components/Navbar'
+export default {
+  name: 'App',
+  components: {
+    Navbar
+  }
 }
+</script>
 
-#nav {
-  padding: 30px;
-}
+<style lang="scss">
+  @import './styles/color-scheme';
+  @import './styles/base';
+  @import './styles/helpers';
+  @import './styles/buttons';
+  @import './styles/forms';
+  @import './styles/tables';
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  .container {
+    display: grid;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  // Transitions when changing routes
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0
+  }
 </style>

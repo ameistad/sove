@@ -1,0 +1,52 @@
+<template>
+  <div>
+    <EntryLines :entries="[entry]"/>
+    <table class="width-100">
+      <tr>
+        <th>Søvneffektivitet</th>
+        <td>{{ entryWithExtractedData.sleepEfficiency }}%</td>
+      </tr>
+      <tr>
+        <th>Tid sovet</th>
+        <td>{{ timeFormat(entryWithExtractedData.timeAsleepTotal) }}</td>
+      </tr>
+      <tr>
+        <th>Tid sovet i sengen</th>
+        <td>{{ timeFormat(entryWithExtractedData.timeAsleepInBed) }}</td>
+      </tr>
+      <tr>
+        <th>Tid i sengen</th>
+        <td>{{ timeFormat(entryWithExtractedData.timeInBed) }}</td>
+      </tr>
+      <tr v-if="entry.data.comments">
+        <th>Kommentarer</th>
+        <td>{{ entry.data.comments }}</td>
+      </tr>
+    </table>
+  </div>
+</template>
+
+<script>
+import EntryDataExtract from '@/mixins/EntryDataExtract'
+import TimeFormat from '@/mixins/TimeFormat'
+import EntryLines from '@/components/EntryLines'
+
+export default {
+  name: 'EntryDetailComponent',
+  mixins: [EntryDataExtract, TimeFormat],
+  props: {
+    entry: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    entryWithExtractedData () {
+      return this.entryDataExtract(this.entry.data)
+    }
+  },
+  components: {
+    EntryLines
+  }
+}
+</script>

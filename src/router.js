@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
-import About from './views/About.vue'
+import Start from '@/views/Start'
+import Entry from '@/views/Entry'
+import Overview from '@/views/Overview'
 
 Vue.use(Router)
 
@@ -9,13 +10,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'start',
+      component: Start
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About
+      path: '/d/:date',
+      name: 'entry',
+      component: Entry
+    },
+    {
+      path: '/o',
+      name: 'overview',
+      component: Overview
     }
-  ]
+  ],
+  mode: 'history'
 })
