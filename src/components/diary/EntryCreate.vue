@@ -7,7 +7,7 @@
       </entry-data>
     </div>
     <div class="create-entry-control">
-      <button @click="createEntry" class="btn create-entry-control-sticky">
+      <button @click="createEntry" class="btn width-100 create-entry-control-btn">
         Lagre registrering
       </button>
     </div>
@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .create-entry {
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -82,7 +82,7 @@ export default {
   .create-entry-control {
     grid-area: control;
   }
-  .create-entry-control-sticky {
+  .create-entry-control-btn {
     position: sticky;
     top: 20px;
   }
@@ -91,5 +91,23 @@ export default {
   }
   .create-entry-question {
     margin-bottom: 20px;
+  }
+
+  @media (max-width: 650px) {
+    .create-entry {
+      display: block;
+    }
+
+    .create-entry-control {
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      background-color: white;
+      padding: 20px 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    }
   }
 </style>
