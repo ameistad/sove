@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Scale the SVG with input -->
-    <input class="width-100" v-model="width" type="range" min="337" max="1537">
+    <input v-if="entries.length > 1" class="width-100" v-model="width" type="range" min="337" max="1537">
 
     <!-- SVG -->
     <svg
