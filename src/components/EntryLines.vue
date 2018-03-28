@@ -10,49 +10,80 @@
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink">
 
-
       <symbol
         v-for="(entry, index) in entries"
+        :key="`entry-${index}`"
         :id="`group-${index}`"
         stroke-width="1">
 
-        <!-- Boxes representing each hour -->
+        <!-- Bar indicating time slept -->
+        <rect x="1" y="10" height="9" width="335" fill="#fff"></rect>
         <rect
-          v-for="hour in 24"
-          :x="0.5 + ((hour - 1) * 14)"
-         y="10"
-         width="14"
-         height="9"
-         :fill="fill(entry, hour)">
-         </rect>
+          :x="sleepBar(entry).x"
+          y="10.5"
+          :width="sleepBar(entry).width"
+          height="8"
+          stroke="none"
+          fill="rgb(134,202,44)">
+        </rect>
 
-        <!-- Down arrow for bedtime -->
-        <g :transform="arrowPosition(entry.date, entry.data.wentToBed)" fill="#474747">
-          <polygon points="149.5 97 137 72 162 72"></polygon>
-        </g>
-        <g :transform="arrowPosition(entry.date, entry.data.gotOutOfBed)" fill="#474747">
-          <polygon points="149.5 97 137 72 162 72"></polygon>
-        </g>
+        <!-- Lines representing hours -->
+        <line
+          v-for="(hour, index) in 23"
+          :key="index"
+          :x1="1 + (hour * 13.9583)"
+          :x2="1 + (hour * 13.9583)"
+          y1="10"
+          y2="19">
+        </line>
+
+        <!-- Line representing went to bed time -->
+        <line
+          :x1="wentToBedLine(entry)"
+          :x2="wentToBedLine(entry)"
+          y1="5"
+          y2="23"
+          stroke="red"
+          stroke-width="2"
+          stroke-linecap="round">
+        </line>
+
+        <!-- Line representing got out of bed -->
+        <line
+          :x1="gotOutOfBedLine(entry)"
+          :x2="gotOutOfBedLine(entry)"
+          y1="5"
+          y2="23"
+          stroke="blue"
+          stroke-width="2"
+          stroke-linecap="round">
+          </line>
 
         <!-- Text displaying date -->
         <text x="0" y="6" stroke="none" font-size="8">{{ dateFormat(entry.date, 'Do MMMM') }}</text>
       </symbol>
 
-      <use v-for="(entry, index) in entries" :href="`#group-${index}`" x="0" :y="(index + 1) * 30"></use>
+      <use
+        v-for="(entry, index) in entries"
+        :href="`#group-${index}`"
+        :key="index"
+        x="0"
+        :y="(index + 1) * 30">
+        </use>
 
+      <!-- Long lines representing the hours 24, 06 and 12 -->
       <text x="73" y="10" font-size="10">2400</text>
       <text x="157" y="10" font-size="10">0600</text>
       <text x="241" y="10" font-size="10">1200</text>
-      <line x1="84.5" y1="15" x2="84.5" y2="100%" stroke-width="2"></line>
-      <line x1="168.5" y1="15" x2="168.5" y2="100%" stroke-width="2"></line>
-      <line x1="252.5" y1="15" x2="252.5" y2="100%" stroke-width="2"></line>
+      <line x1="84.5" y1="15" x2="84.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="168.5" y1="15" x2="168.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="252.5" y1="15" x2="252.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
   </svg>
 </div>
 </template>
 
 <script>
-import range from 'lodash.range'
-import { subDays, setHours, addHours, addMinutes, getMinutes, isWithinRange, differenceInHours } from 'date-fns'
+import { subDays, setHours, differenceInMinutes } from 'date-fns'
 import EntryDataExtract from '@/mixins/EntryDataExtract'
 import DateFormat from '@/mixins/DateFormat'
 
@@ -71,25 +102,24 @@ export default {
     }
   },
   methods: {
-    fill (entry, hour) {
-      hour = addHours(setHours(subDays(entry.date, 1), 18), hour)
+    sleepBar (entry) {
+      const end = setHours(entry.date, 18)
+      const start = subDays(end, 1)
       const extractedEntryData = this.entryDataExtract(entry.data)
-
-      let fellAsleep = addMinutes(extractedEntryData.fellAsleep, 1)
-      fellAsleep = getMinutes(fellAsleep) > 35 ? addHours(fellAsleep, 1) : fellAsleep
-
-      const isAsleepAtHour = isWithinRange(
-        hour,
-        fellAsleep,
-        extractedEntryData.finalAwakening)
-      return isAsleepAtHour ? 'rgb(134,202,44)' : '#fff'
+      const fellAsleep = extractedEntryData.fellAsleep
+      const timeAsleepInBed = extractedEntryData.timeAsleepInBed
+      return {
+        x: differenceInMinutes(fellAsleep, start) / 4.2985,
+        width: timeAsleepInBed / 4.2985
+      }
     },
-    arrowPosition (date, time) {
-      const start = setHours(subDays(date, 1), 18)
-      const difference = differenceInHours(time, start)
-      const positions = range(25).map((r, i) => -149 + (i * 14))
-      const position = positions[difference]
-      return `translate(${position}, -88)`
+    wentToBedLine (entry) {
+      const start = subDays(setHours(entry.date, 18), 1)
+      return differenceInMinutes(entry.data.wentToBed, start) / 4.2985
+    },
+    gotOutOfBedLine (entry) {
+      const start = subDays(setHours(entry.date, 18), 1)
+      return differenceInMinutes(entry.data.gotOutOfBed, start) / 4.2985
     }
   },
   computed: {
@@ -100,27 +130,3 @@ export default {
   }
 }
 </script>
-<!-- hour-1" x="0.5" y="0.5" width="14"
-hour-2" x="14.5" y="0.5" width="14"
-hour-3" x="28.5" y="0.5" width="14"
-hour-4" x="42.5" y="0.5" width="14"
-hour-5" x="56.5" y="0.5" width="14"
-hour-6" x="70.5" y="0.5" width="14"
-hour-7" x="84.5" y="0.5" width="14"
-hour-8" x="98.5" y="0.5" width="14"
-hour-9" x="112.5" y="0.5" width="14"
-hour-10" x="126.5" y="0.5" width="14"
-hour-11" x="140.5" y="0.5" width="14"
-hour-12" x="154.5" y="0.5" width="14"
-hour-13" x="168.5" y="0.5" width="14"
-hour-14" x="182.5" y="0.5" width="14"
-hour-15" x="196.5" y="0.5" width="14"
-hour-16" x="210.5" y="0.5" width="14"
-hour-17" x="224.5" y="0.5" width="14"
-hour-18" x="238.5" y="0.5" width="14"
-hour-19" x="252.5" y="0.5" width="14"
-hour-20" x="266.5" y="0.5" width="14"
-hour-21" x="280.5" y="0.5" width="14"
-hour-22" x="294.5" y="0.5" width="14"
-hour-23" x="308.5" y="0.5" width="14"
-hour-24" x="322.5" y="0.5" width="14" -->
