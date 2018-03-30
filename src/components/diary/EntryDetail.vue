@@ -3,6 +3,22 @@
     <EntryLines :entries="[entry]"/>
     <table class="width-100">
       <tr>
+        <th>Leggetid</th>
+        <td>{{ dateFormat(entryWithExtractedData.wentToBed, 'HH.mm') }}</td>
+      </tr>
+      <tr>
+        <th>Sovnet</th>
+        <td>{{ dateFormat(entryWithExtractedData.fellAsleep, 'HH.mm') }}</td>
+      </tr>
+      <tr>
+        <th>Våknet</th>
+        <td>{{ dateFormat(entryWithExtractedData.finalAwakening, 'HH.mm') }}</td>
+      </tr>
+      <tr>
+        <th>Stod opp av sengen</th>
+        <td>{{ dateFormat(entryWithExtractedData.gotOutOfBed, 'HH.mm') }}</td>
+      </tr>
+      <tr>
         <th>Søvneffektivitet</th>
         <td>{{ entryWithExtractedData.sleepEfficiency }}%</td>
       </tr>
@@ -28,12 +44,13 @@
 
 <script>
 import EntryDataExtract from '@/mixins/EntryDataExtract'
+import DateFormat from '@/mixins/DateFormat'
 import TimeFormat from '@/mixins/TimeFormat'
 import EntryLines from '@/components/EntryLines'
 
 export default {
   name: 'EntryDetailComponent',
-  mixins: [EntryDataExtract, TimeFormat],
+  mixins: [EntryDataExtract, DateFormat, TimeFormat],
   props: {
     entry: {
       type: Object,
