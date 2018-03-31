@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    entries: [],
+    entries: []
   },
   mutations: {
     createEntryMutation (state, entry) {
@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     deleteEntryMutation (state, entryIndex) {
       state.entries.splice(entryIndex, 1)
+    },
+    deleteAllEntriesMutation (state) {
+      state.entries = []
     }
   },
   actions: {
@@ -32,11 +35,14 @@ export default new Vuex.Store({
     },
     deleteEntry ({ commit }, entryIndex) {
       commit('deleteEntryMutation', entryIndex)
+    },
+    deleteAllEntries ({ commit }) {
+      commit('deleteAllEntriesMutation')
     }
   },
   getters: {
     // Return sorted entries by date
-    entries: state => {
+    entries: (state) => {
       return state.entries.sort((a, b) => new Date(a.date) - new Date(b.date))
     }
   },

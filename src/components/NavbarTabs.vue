@@ -12,6 +12,12 @@
       class="navbar-tab">
       Oversikt
     </router-link>
+    <router-link
+      :to="{ name: 'dashboard' }"
+      :class="{ 'navbar-tab-active': $route.name === 'dashboard' }"
+      class="navbar-tab">
+      Instillinger
+    </router-link>
   </div>
 </template>
 
