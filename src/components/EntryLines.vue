@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Scale the SVG with input -->
-    <input v-if="entries.length > 1" class="width-100" v-model="width" type="range" min="337" max="1537">
+    <input v-if='entries.length > 1' class="width-100" v-model="width" type="range" min="337" max="1537">
 
     <!-- SVG -->
     <svg
@@ -100,12 +100,12 @@
 </template>
 
 <script>
-import { subDays, setHours, differenceInMinutes } from "date-fns";
-import EntryDataExtract from "@/mixins/EntryDataExtract";
-import DateFormat from "@/mixins/DateFormat";
+import { subDays, setHours, differenceInMinutes } from 'date-fns'
+import EntryDataExtract from '@/mixins/EntryDataExtract'
+import DateFormat from '@/mixins/DateFormat'
 
 export default {
-  name: "EntryLines",
+  name: 'EntryLines',
   mixins: [EntryDataExtract, DateFormat],
   props: {
     entries: {
@@ -113,37 +113,37 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       width: 337
-    };
+    }
   },
   methods: {
-    sleepBar(entry) {
-      const end = setHours(entry.date, 18);
-      const start = subDays(end, 1);
-      const extractedEntryData = this.entryDataExtract(entry.data);
-      const fellAsleep = extractedEntryData.fellAsleep;
-      const timeAsleepInBed = extractedEntryData.timeAsleepInBed;
+    sleepBar (entry) {
+      const end = setHours(entry.date, 18)
+      const start = subDays(end, 1)
+      const extractedEntryData = this.entryDataExtract(entry.data)
+      const fellAsleep = extractedEntryData.fellAsleep
+      const timeAsleepInBed = extractedEntryData.timeAsleepInBed
       return {
         x: differenceInMinutes(fellAsleep, start) / 4.2985,
         width: timeAsleepInBed / 4.2985
-      };
+      }
     },
-    wentToBedLine(entry) {
-      const start = subDays(setHours(entry.date, 18), 1);
-      return differenceInMinutes(entry.data.wentToBed, start) / 4.2985;
+    wentToBedLine (entry) {
+      const start = subDays(setHours(entry.date, 18), 1)
+      return differenceInMinutes(entry.data.wentToBed, start) / 4.2985
     },
-    gotOutOfBedLine(entry) {
-      const start = subDays(setHours(entry.date, 18), 1);
-      return differenceInMinutes(entry.data.gotOutOfBed, start) / 4.2985;
+    gotOutOfBedLine (entry) {
+      const start = subDays(setHours(entry.date, 18), 1)
+      return differenceInMinutes(entry.data.gotOutOfBed, start) / 4.2985
     }
   },
   computed: {
-    viewBox() {
-      const height = 50 + 30 * this.entries.length;
-      return `0 0 ${this.width} ${height}`;
+    viewBox () {
+      const height = 50 + 30 * this.entries.length
+      return `0 0 ${this.width} ${height}`
     }
   }
-};
+}
 </script>
