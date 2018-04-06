@@ -70,6 +70,13 @@
         <!-- Text displaying date -->
         <text x="0" y="6" stroke="none" font-size="8">{{ dateFormat(entry.date, 'Do MMMM') }}</text>
       </symbol>
+      <!-- Long lines representing the hours 24, 06 and 12 -->
+      <text x="73" y="40" font-size="9" stroke-width=".7">2400</text>
+      <text x="157" y="40" font-size="9" stroke-width=".7">0600</text>
+      <text x="241" y="40" font-size="9" stroke-width=".7">1200</text>
+      <line x1="84.5" y1="45" x2="84.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="168.5" y1="45" x2="168.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
+      <line x1="252.5" y1="45" x2="252.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
 
       <!-- Main display -->
       <use
@@ -79,14 +86,6 @@
         x="0"
         :y="((index + 1) * 30) + 20">
       </use>
-
-      <!-- Long lines representing the hours 24, 06 and 12 -->
-      <text x="73" y="40" font-size="9" stroke-width=".7">2400</text>
-      <text x="157" y="40" font-size="9" stroke-width=".7">0600</text>
-      <text x="241" y="40" font-size="9" stroke-width=".7">1200</text>
-      <line x1="84.5" y1="45" x2="84.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
-      <line x1="168.5" y1="45" x2="168.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
-      <line x1="252.5" y1="45" x2="252.5" y2="99%" stroke-width="2" stroke-linecap="round"></line>
 
       <!-- Lines information -->
       <use x="270" y="0" href="#wentToBed"></use>
