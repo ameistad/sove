@@ -29,6 +29,10 @@ export default {
     highlighted: {
       type: Object,
       default: () => {}
+    },
+    customDateFormat: {
+      type: String,
+      default: 'Do MMMM YYYY'
     }
   },
   data () {
@@ -48,7 +52,7 @@ export default {
   },
   methods: {
     customDate (date) {
-      return this.dateFormat(date, 'Do MMMM YYYY')
+      return this.dateFormat(date, this.customDateFormat)
     }
   },
   components: {

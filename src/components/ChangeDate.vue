@@ -2,7 +2,8 @@
   <div>
     <date-picker
       v-model="date"
-      :highlighted="{ dates: savedDates }">
+      :highlighted="{ dates: savedDates }"
+      customDateFormat="dddd Do MMMM YYYY">
     </date-picker>
   </div>
 </template>
