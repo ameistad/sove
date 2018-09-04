@@ -3,7 +3,7 @@
     <div v-if="show" @click="close" class="modal-mask">
       <div @click.stop class="modal-container">
         <div @click="close" class="modal-close">
-          <svgicon icon="close" height="30" width="30" color="#474747"></svgicon>
+          x
           <span class="modal-close-text">esc</span>
         </div>
         <div class="modal-header">
@@ -18,25 +18,24 @@
 </template>
 
 <script>
-  import '@/icons/close'
-  export default {
-    props: {
-      show: Boolean
-    },
-    mounted () {
-      // Event listener to close modal when pressing the esc-key
-      document.addEventListener('keydown', (event) => {
-        if (this.show && event.keyCode === 27) {
-          this.close()
-        }
-      })
-    },
-    methods: {
-      close () {
-        this.$emit('close')
+export default {
+  props: {
+    show: Boolean
+  },
+  mounted () {
+    // Event listener to close modal when pressing the esc-key
+    document.addEventListener('keydown', (event) => {
+      if (this.show && event.keyCode === 27) {
+        this.close()
       }
+    })
+  },
+  methods: {
+    close () {
+      this.$emit('close')
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
